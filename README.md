@@ -190,16 +190,7 @@ cd AI-LLM-REVIEW-PIPELINE
 
 # Build and start everything (Airflow, Kafka, both Postgres instances, Streamlit)
 docker-compose up --build
-```
 
-| Service | URL |
-|---|---|
-| Airflow UI | http://localhost:8085 |
-| Kafka UI | http://localhost:8090 |
-| Streamlit Dashboard | http://localhost:8501 |
-| App Postgres | `localhost:5433` (db: `reviews`) |
-
----
 
 ## 🚧 Challenges Solved
 
