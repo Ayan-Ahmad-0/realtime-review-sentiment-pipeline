@@ -14,7 +14,7 @@ A real-time, event-driven data engineering pipeline that ingests live reviews fr
 
 ---
 
-## 📋 Overview
+## Overview
 
 This pipeline automatically:
 1. Polls live reviews from three Google Play apps and publishes each review as a message to the Kafka topic.
@@ -29,7 +29,7 @@ This mirrors how companies like Amazon or Shopify sellers monitor product feedba
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 **Live Reviews API** → **Producer (Kafka)** → **Consumer (Batching)** → **LLM API** → **Validation Gate** → **PostgreSQL** → **Streamlit Dashboard**
 
@@ -58,14 +58,14 @@ This mirrors how companies like Amazon or Shopify sellers monitor product feedba
 - **Containerization:** Docker Compose — separate images for Airflow and the Streamlit dashboard
 
 ---
-## 📊 Dashboard Output
+## Dashboard Output
 
 ![Streamlit Dashboard](images/dashboard_1.png)
 ![Streamlit Dashboard](images/dashboard_2.png)
 
 
 ---
-## 🔄 Pipeline Flow (Airflow DAG)
+## Pipeline Flow (Airflow DAG)
 
 ```
 extract (poll live API, publish to Kafka)
@@ -97,7 +97,7 @@ Dynamic task mapping means a failure in one batch retries and logs independently
 
 ---
 
-## 🗂️ Database Tables
+## Database Tables
 
 | Table | Description |
 |---|---|
@@ -108,7 +108,7 @@ Dynamic task mapping means a failure in one batch retries and logs independently
 
 ---
 
-## ✅ Data Validation & Reliability
+## Data Validation & Reliability
 
 Before a batch's results are written to `review_sentiment`, they pass through:
 
@@ -123,7 +123,7 @@ If a batch fails validation, the pipeline logs it to `failed_batches` rather tha
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 ai-llm-review-pipeline/
@@ -162,7 +162,7 @@ ai-llm-review-pipeline/
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 The pipeline is parameterized via environment variables, so no credentials are hardcoded in application code.
 
@@ -177,7 +177,7 @@ Airflow's own metadata database and the pipeline's application database are **de
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ```bash
 # Clone the repo
@@ -192,7 +192,7 @@ cd AI-LLM-REVIEW-PIPELINE
 docker-compose up --build
 
 
-## 🚧 Challenges Solved
+## Challenges Solved
 
 - Diagnosed an `airflow-init` crash loop caused by a `SQLAlchemy 2.0.x` pin — Airflow 2.5.1 requires `SQLAlchemy 1.4.x` since 2.0 removed the `executemany_mode='values'` option Airflow's ORM setup still passes. Fixed by pinning `SQLAlchemy==1.4.49` in the Airflow container only, leaving the Streamlit image (a separate, unconstrained container) on `2.0.30`
 - Kept Airflow's metadata database and the pipeline's application database fully isolated (`airflow-postgres` vs. `app-postgres` on a separate port) to prevent state from mixing
@@ -202,7 +202,7 @@ docker-compose up --build
 
 
 
-## 🛠️ Future Improvements
+## Future Improvements
 
 - Add a FastAPI layer in front of PostgreSQL so the dashboard isn't querying the database directly
 - Expand to additional live review sources (Best Buy, Reddit)
