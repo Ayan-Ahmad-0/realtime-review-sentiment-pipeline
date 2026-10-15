@@ -12,6 +12,7 @@ A real-time, event-driven data engineering pipeline that ingests live reviews fr
 ![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=flat&logo=pydantic&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-D71F00?style=flat&logo=python&logoColor=white)
 
+**Live demo:** https://realtime-review-sentiment-pipeline-jhmvjrwbwdxrj8ye89tfnu.streamlit.app/
 ---
 
 ## Overview
