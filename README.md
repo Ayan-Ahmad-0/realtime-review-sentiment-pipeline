@@ -58,7 +58,9 @@ This mirrors how companies like Amazon or Shopify sellers monitor product feedba
 - **Containerization:** Docker Compose — separate images for Airflow and the Streamlit dashboard
 
 ---
-## Dashboard Output
+## Live Demo
+
+**Public Streamlit URL:** [https://realtime-review-sentiment-pipeline-jhmvjrwbwdxrj8ye89tfnu.streamlit.app/](https://realtime-review-sentiment-pipeline-jhmvjrwbwdxrj8ye89tfnu.streamlit.app/)
 
 ![Streamlit Dashboard](images/dashboard_1.png)
 ![Streamlit Dashboard](images/dashboard_2.png)
@@ -190,9 +192,16 @@ cd AI-LLM-REVIEW-PIPELINE
 
 # Build and start everything (Airflow, Kafka, both Postgres instances, Streamlit)
 docker-compose up --build
+```
 
+| Service | URL |
+|---|---|
+| **Streamlit Dashboard (Live Cloud)** | [https://realtime-review-sentiment-pipeline-jhmvjrwbwdxrj8ye89tfnu.streamlit.app/](https://realtime-review-sentiment-pipeline-jhmvjrwbwdxrj8ye89tfnu.streamlit.app/) |
+| **Streamlit Dashboard (Local)** | [http://localhost:8501](http://localhost:8501) |
+| **Airflow Webserver** | [http://localhost:8085](http://localhost:8085) |
+| **Kafka UI** | [http://localhost:8090](http://localhost:8090) |
 
-## Challenges Solved
+---
 
 - Diagnosed an `airflow-init` crash loop caused by a `SQLAlchemy 2.0.x` pin — Airflow 2.5.1 requires `SQLAlchemy 1.4.x` since 2.0 removed the `executemany_mode='values'` option Airflow's ORM setup still passes. Fixed by pinning `SQLAlchemy==1.4.49` in the Airflow container only, leaving the Streamlit image (a separate, unconstrained container) on `2.0.30`
 - Kept Airflow's metadata database and the pipeline's application database fully isolated (`airflow-postgres` vs. `app-postgres` on a separate port) to prevent state from mixing
