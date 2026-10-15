@@ -200,6 +200,19 @@ st.markdown(
 # DATA LOADING — live from Postgres (raw_reviews JOIN review_sentiment)
 # ==============================================================================
 DB_CONN = os.environ.get("APP_DB_CONN")
+if not DB_CONN:
+    try:
+        DB_CONN = st.secrets.get("APP_DB_CONN")
+    except Exception:
+        DB_CONN = None
+
+if DB_CONN:
+    # Ensure compatible scheme for SQLAlchemy with psycopg2
+    if DB_CONN.startswith("postgres://"):
+        DB_CONN = DB_CONN.replace("postgres://", "postgresql+psycopg2://", 1)
+    elif DB_CONN.startswith("postgresql://") and not DB_CONN.startswith("postgresql+psycopg2://"):
+        DB_CONN = DB_CONN.replace("postgresql://", "postgresql+psycopg2://", 1)
+
 
 QUERY = """
     SELECT
